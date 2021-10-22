@@ -122,6 +122,9 @@ func Apply(update io.Reader, opts Options) error {
 		return err
 	}
 
+	// if w don't call fp.Sync(), the file may be lost if the machine is powered off
+	fp.Sync()
+
 	// if we don't call fp.Close(), windows won't let us move the new executable
 	// because the file will still be "in use"
 	fp.Close()
